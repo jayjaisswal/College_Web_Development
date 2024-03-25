@@ -115,3 +115,35 @@ let globalLet = 200;
 console.log(window.globalLet); // Outputs: undefined (in browser environment)
 
 // Question Practice .................................................
+ let age = 23;
+ age +2; //23
+ console.log(age);
+ age+=2 //25
+ console.log(age);
+
+// boolean
+// true , false case sensitive 
+
+//................String
+
+naams = "hello brother"
+console.log(naams.length)
+console.log("jay" + " " + "Kumar")
+
+// Question practice ..........................
+let myname = "jay kumar";
+console.log(`my name length is ${myname.length}`);
+
+firstname = "jay";
+console.log(firstname[0]);
+console.log(firstname[-1]);//undefined
+console.log(firstname[firstname.length - 1]);
+console.log("ApnaCollege" + 123)
+
+str = " ";
+str1 = "";
+console.log(str.length);
+console.log(str1.length);
+
+
+
