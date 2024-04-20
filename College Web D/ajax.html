@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AJAX Example</title>
+    <script src="ajax_example.js"></script>
+</head>
+<body>
+    <h1>AJAX Example</h1>
+    <button onclick="loadData()">Load Data</button>
+    <div id="content"></div>
+    <script>
+function loadData() {
+    // Create a new XMLHttpRequest object
+    const xhr = new XMLHttpRequest();
+
+    // Define a callback function to handle the response
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) { // Request is complete
+            if (xhr.status === 200) { // Response is OK
+                // Parse the JSON response
+                const data = JSON.parse(xhr.responseText);
+                
+                // Create HTML to display the data
+                const html = `
+                    <h2>${data.title}</h2>
+                    <p>${data.body.replace(/\n/g, '<br>')}</p>
+                    <p>User ID: ${data.userId}</p>
+                    <p>Post ID: ${data.id}</p>
+                `;
+
+                // Update the content of the div with the retrieved data
+                document.getElementById('content').innerHTML = html;
+            } else {
+                console.error('Error: ' + xhr.status);
+            }
+        }
+    };
+
+    // Open a GET request to the server
+    xhr.open('GET', 'https://jsonplaceholder.typicode.com/posts/1', true);
+
+    // Send the request
+    xhr.send();
+}
+
+
+    </script>
+</body>
+</html>

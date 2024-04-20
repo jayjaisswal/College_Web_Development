@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Progress Bar</title>
+<style>
+  #progressBar 
+  {
+    width: 100%;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+
+  #progress 
+  {
+    width: 0%;
+    height: 30px;
+    background-color: #4caf50;
+    border-radius: 5px;
+    transition: width 1s ease-in-out;
+  }
+</style>
+</head>
+<body>
+<div id="progressBar">
+  <div id="progress"></div>
+</div>
+<button onclick="startProgress()">Start Progress</button>
+<script>
+  function startProgress() 
+  {
+    var progressBar = document.getElementById('progress');
+    var width = 0;
+    var interval = setInterval(function() 
+    {
+      if (width >= 100) 
+      {
+        clearInterval(interval);
+        alert('Task completed!');
+      } 
+      else 
+      {
+        width += 10; 
+        progressBar.style.width = width + '%';
+      }
+    }, 500);
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Years When January 1st is a Sunday</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+<h1>Years When January 1st is a Sunday</h1>
+<p id="sundayYears"></p>
+
+<script>
+function checkSunday() {
+    var sundayYears = [];
+
+    for (var year = 2014; year <= 2050; year++) 
+    {
+        var date = new Date(year, 0, 1); // Month is 0-indexed, so January is 0
+        var day = date.getDay(); // 0 is Sunday, 1 is Monday, ..., 6 is Saturday
+
+        if (day === 0) 
+        {
+            sundayYears.push(year);
+        }
+    }
+
+    return sundayYears;
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    var sundayYears = checkSunday();
+    var sundayYearsOutput = document.getElementById("sundayYears");
+    if (sundayYears.length > 0) {
+        sundayYearsOutput.textContent = "Years when January 1st is a Sunday: " + sundayYears;
+    } 
+    else 
+    {
+        sundayYearsOutput.textContent = "No years found when January 1st is a Sunday between 2014 and 2050.";
+    }
+});
+</script>
+</body>
+</html>

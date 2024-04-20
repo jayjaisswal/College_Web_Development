@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Change Background on Click</title>
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+    }
+</style>
+</head>
+<body onclick="changeBackgroundColor()">
+<script>
+function changeBackgroundColor() {
+    var randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+    document.body.style.backgroundColor = randomColor;
+}
+</script>
+</body>
+</html>

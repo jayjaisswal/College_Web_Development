@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Schedule Planner</title>
+    <script>
+        // JavaScript code will go here
+    </script>
+</head>
+<body>
+    <h1>Schedule Planner</h1>
+    <form id="scheduleForm" method="POST" action="process_schedule.php">
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" name="startDate" required><br><br>
+        
+        <label for="numMondays">Number of Mondays:</label>
+        <input type="number" id="numMondays" name="numMondays" min="0" required><br><br>
+        
+        <label for="numTuesdays">Number of Tuesdays:</label>
+        <input type="number" id="numTuesdays" name="numTuesdays" min="0" required><br><br>
+        
+        <label for="numWednesdays">Number of Wednesdays:</label>
+        <input type="number" id="numWednesdays" name="numWednesdays" min="0" required><br><br>
+        
+        <label for="numThursdays">Number of Thursdays:</label>
+        <input type="number" id="numThursdays" name="numThursdays" min="0" required><br><br>
+        
+        <label for="numFridays">Number of Fridays:</label>
+        <input type="number" id="numFridays" name="numFridays" min="0" required><br><br>
+        
+        <label for="numSaturdays">Number of Saturdays:</label>
+        <input type="number" id="numSaturdays" name="numSaturdays" min="0" required><br><br>
+        
+        <label for="numSundays">Number of Sundays:</label>
+        <input type="number" id="numSundays" name="numSundays" min="0" required><br><br>
+        
+        <label for="excludedDates">Excluded Dates (separated by commas):</label>
+        <input type="text" id="excludedDates" name="excludedDates"><br><br>
+        
+        <input type="submit" value="Submit">
+    </form>
+
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('scheduleForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    // Get form values
+    const startDate = new Date(document.getElementById('startDate').value);
+    const numMondays = parseInt(document.getElementById('numMondays').value);
+    const numTuesdays = parseInt(document.getElementById('numTuesdays').value);
+    const numWednesdays = parseInt(document.getElementById('numWednesdays').value);
+    const numThursdays = parseInt(document.getElementById('numThursdays').value);
+    const numFridays = parseInt(document.getElementById('numFridays').value);
+    const numSaturdays = parseInt(document.getElementById('numSaturdays').value);
+    const numSundays = parseInt(document.getElementById('numSundays').value);
+    const excludedDatesInput = document.getElementById('excludedDates').value;
+
+    // Parse excluded dates
+    const excludedDates = excludedDatesInput.split(',').map(date => new Date(date.trim()));
+
+    // Create a dictionary to hold future dates
+    const futureDates = {
+        'Monday': [],
+        'Tuesday': [],
+        'Wednesday': [],
+        'Thursday': [],
+        'Friday': [],
+        'Saturday': [],
+        'Sunday': []
+    };
+
+    // Calculate future dates
+    function calculateDates(startDate, numDays, dayOfWeek, futureDates) {
+        let currentDate = new Date(startDate);
+        let dayOfWeekIndex = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].indexOf(dayOfWeek);
+        
+        while (futureDates[dayOfWeek].length < numDays) {
+            // Find the next date with the specified day of the week
+            while (currentDate.getDay() !== dayOfWeekIndex) {
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+            
+            // Check if the date is excluded
+            if (!excludedDates.some(date => date.toDateString() === currentDate.toDateString())) {
+                // Add the date to the list
+                futureDates[dayOfWeek].push(new Date(currentDate));
+            }
+            
+            // Move to the next date
+            currentDate.setDate(currentDate.getDate() + 7);
+        }
+    }
+
+    calculateDates(startDate, numMondays, 'Monday', futureDates);
+    calculateDates(startDate, numTuesdays, 'Tuesday', futureDates);
+    calculateDates(startDate, numWednesdays, 'Wednesday', futureDates);
+    calculateDates(startDate, numThursdays, 'Thursday', futureDates);
+    calculateDates(startDate, numFridays, 'Friday', futureDates);
+    calculateDates(startDate, numSaturdays, 'Saturday', futureDates);
+    calculateDates(startDate, numSundays, 'Sunday', futureDates);
+    
+    // Determine the last date of the semester (latest date)
+    let lastDateOfSemester = null;
+    for (const day in futureDates) {
+        if (futureDates[day].length > 0) {
+            const maxDate = new Date(Math.max(...futureDates[day].map(date => date.getTime())));
+            if (!lastDateOfSemester || maxDate > lastDateOfSemester) {
+                lastDateOfSemester = maxDate;
+            }
+        }
+    }
+    
+    // Display future dates and the last date of the semester
+    let result = '<h2>Future Dates:</h2>';
+    for (const day in futureDates) {
+        result += `<h3>${day}s:</h3><ul>`;
+        futureDates[day].forEach(date => {
+            result += `<li>${date.toDateString()}</li>`;
+        });
+        result += `</ul>`;
+    }
+    result += `<h2>Last Date of the Semester:</h2><p>${lastDateOfSemester.toDateString()}</p>`;
+    
+    document.getElementById('result').innerHTML = result;
+});
+
+    </script>
+</body>
+</html>

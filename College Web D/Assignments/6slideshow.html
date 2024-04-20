@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <img src="1.jpg" id="image">
+        <br>
+         <button id="prev">prev</button>
+         <button id="next">next</button>
+    </div>
+    <script>
+      let src=["1.jpg","2.jpg","3.jpg", "4.jpg", "5.jpg","6.jpg","7.jpg","8.jpg"];
+      let index = 0;
+      let image=document.getElementById("image");
+      let nextBtn= document.getElementById('next');
+      let prevBtn=document.getElementById('prev');
+      nextBtn.addEventListener("click",()=>
+      {
+        index=index+1;
+        if(index%src.length==0) index=0;
+        image.src = src[index];
+      });
+      prevBtn.addEventListener("click",()=>
+      {
+        index=index-1;
+        if(index==-1) index=src.length-1;
+        image.src = src[index];
+      });
+    </script>
+</body>
+</html>

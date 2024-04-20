@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AJAX GET and POST Example</title>
+    <script>
+        // Function to demonstrate an AJAX GET request
+        function loadGetData() {
+            fetch('https://jsonplaceholder.typicode.com/posts/1')
+                .then(response => response.json()) // Parse the JSON response
+                .then(data => {
+                    // Display the data in the 'content' div
+                    const contentDiv = document.getElementById('content');
+                    contentDiv.innerHTML = `
+                        <h2>${data.title}</h2>
+                        <p>${data.body.replace(/\n/g, '<br>')}</p>
+                        <p>User ID: ${data.userId}</p>
+                        <p>Post ID: ${data.id}</p>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // Function to demonstrate an AJAX POST request
+        function loadPostData() {
+            const data = {
+                title: 'New Post',
+                body: 'This is a new post created via AJAX POST.',
+                userId: 1
+            };
+
+            fetch('https://jsonplaceholder.typicode.com/posts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json()) // Parse the JSON response
+                .then(data => {
+                    // Display the data in the 'content' div
+                    const contentDiv = document.getElementById('content');
+                    contentDiv.innerHTML = `
+                        <h2>${data.title}</h2>
+                        <p>${data.body.replace(/\n/g, '<br>')}</p>
+                        <p>User ID: ${data.userId}</p>
+                        <p>Post ID: ${data.id}</p>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</head>
+
+<body>
+    <h1>AJAX GET and POST Example</h1>
+    <button onclick="loadGetData()">Load GET Data</button>
+    <button onclick="loadPostData()">Load POST Data</button>
+    <div id="content"></div>
+</body>
+
+</html>

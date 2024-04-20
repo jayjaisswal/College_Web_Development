@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+</head>
+<body>
+    <h2>Simple Calculator</h2>
+    <label for="num1">Enter first number:</label>
+    <input type="number" id="num1"><br><br>
+    
+    <label for="num2">Enter second number:</label>
+    <input type="number" id="num2"><br><br>
+    
+    <button onclick="calculateMultiplication()">Calculate Multiplication</button>
+    <button onclick="calculateDivision()">Calculate Division</button><br><br>
+    <p id="result"></p>
+    <script>
+        function calculateMultiplication() 
+        {
+            var num1 = parseFloat(document.getElementById('num1').value);
+            var num2 = parseFloat(document.getElementById('num2').value);
+            var result = document.getElementById('result');
+            var multiplication = num1 * num2;
+            result.textContent = 'Multiplication: ' + multiplication;
+        }
+
+        function calculateDivision() 
+        {
+            var num1 = parseFloat(document.getElementById('num1').value);
+            var num2 = parseFloat(document.getElementById('num2').value);
+            var result = document.getElementById('result');
+            var division = num1 / num2;
+            result.textContent = 'Division: ' + division;
+        }
+    </script>
+</body>
+</html>
